@@ -1,9 +1,12 @@
+import java.util.Random;
+
 public class Deck {
        
+       	private Random rand = new Random();
         private String[][] deck;
         private String[] cardNames = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
         private String[] suitNames = {"Diamonds", "Hearts", "Clubs", "Spades"};
-       private int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
+       	private int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 
         public Deck() {
                 Deck deck = {};
@@ -15,9 +18,17 @@ public class Deck {
                                 deck[i][j] = new Card(suitNames[i], cardNames[j]);
                        
                         System.out.println(deck[i][j].value + "of" + deck[i][j].suit);
+
                          }
                 
                  }
         
         }
+
+        public void shuffle() {
+          for (int i=0; i<13; i++) {
+          	deck[rand] = deck[i];
+
+          }
+		}
 }
