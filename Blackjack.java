@@ -4,34 +4,49 @@ public class Blackjack {
 
         private int player;
         private int dealer;
-        private int drawn = deck[rand];
+        private int counter = 0;
+        private Card drawn = deck[counter];
+
 
                 
-    public scorePlayer() {
-        for (int i=0; i<52; i++) {
+    public static void main(String[] args) {
+
+        System.out.println("You got a " + drawn.name);
+        player = drawn.value; 
+
+        counter++;
+        drawn = deck[counter];
+
+        player = drawn.value + player;
+        System.out.println("You got a " + drawn.name);
+        System.out.println("Your score is " + player);
+
+        System.out.println("Do you want to hit or stay?");
+        Scanner reader = new Scanner (System.in);
+
+        String yourChoice = reader.next();
+
+        if (yourChoice.equals("hit")) {
             
-            if (value[i] < 21) {
-                player.hit();
-                newValue + value[i] = value[i];
-            }
-            else if (value[i]==21) {
-                System.out.println("You win!");
-            }
-
-            else if (value[i] > 21) {
-                break;
-            }
-
+            
         }
+
     }
 
     public void hit() {
-        int newValue = 0;
-        deck[rand] = newValue;
+        counter++;
+        drawn = deck[counter];
+
+        player = drawn.value + player;
     }
 }
 
 }
+
+
+
+
+
 
 
 
