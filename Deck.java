@@ -1,10 +1,14 @@
+import java.util.Random;
+import java.awt.*;
+import java.applet.*;
+
 public class Deck {
         
 
    
     private Card[] deck = new Card[52];
     private String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
-    private String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    private String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     private int value;
 
 
@@ -36,21 +40,48 @@ public class Deck {
   }
 
   public void shuffle() {
+    Random r = new Random();
+    int card = r.nextInt(52);
+
 
     // Shuffle the cards
-    for (int i = 0; i < this.deck.length; i++) {
-      int index = (int)(Math.random() * this.deck.length);
-      Card temp = deck[i];
-      deck[i] = deck[index];
-      deck[index] = temp;
+   for(int i=this.deck.length-1; i>=0; i--) {
+      card = r.nextInt(i+1);
+      Card temp = this.deck[card];
+      this.deck[card] = this.deck[i];
+      this.deck[i] = temp;
     }
 }
+
   public void print() {
     // Display the all the cards
     for (int i = 0; i < 52; i++) {
      System.out.println(this.deck[i].name());
     }
+
     }
+
+    public void draw(Graphics g) {
+      int count = 0;
+      for (int i=0; i<52; i++) {
+          this.deck[i].draw(g, new Rectangle(60+(60*i), 60, 50, 60));
+          
+          count++;
+
+        }
+
+        this.shuffle();
+
+        for (int i=0; i<52; i++) {
+          this.deck[i].draw(g, new Rectangle(60+(60*i), 200, 50, 60));
+
+          count++;
+        }
+        
+    }
+
+    
+
 
     public static void main(String[] args) {
       Deck deck = new Deck();
