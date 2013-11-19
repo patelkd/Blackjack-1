@@ -6,11 +6,17 @@ public class TestApplet extends Applet {
 	private Deck test;
 
 	public void init() {
-		test = new Deck("card");
+		this.test = new Deck();
+	}
+
+	public void actionPerformed(ActionEvent ae) {
+		
 	}
 
 	public void paint(Graphics g) {
-		test.draw(g, new Rectangle(50, 50, 200, 300));
-	}
+		test.draw(g);
+		}
+
+
 
 }
