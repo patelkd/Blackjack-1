@@ -1,50 +1,139 @@
-import java.util.Scanner;
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
 
-public class Blackjack {
+public class Blackjack extends Applet implements ActionListener {
 
-        private int player;
-        private int dealer;
-        private int counter = 0;
-        private Card drawn = deck[counter];
+        private Deck deck;
+        private Player p;
+        private Player dealer;
+        private JLabel cards;
+        private JPanel winLosePanel = new JPanel();
+        private JLabel winLoseLabel = new JLabel(" ");
+        private JLabel label;
+        private int value = 0;
 
+        public void init() {
 
-                
-    public static void main(String[] args) {
+                setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        System.out.println("You got a " + drawn.name);
-        player = drawn.value; 
+                this.deck = new Deck();
 
-        counter++;
-        drawn = deck[counter];
+                deck.shuffle();
 
-        player = drawn.value + player;
-        System.out.println("You got a " + drawn.name);
-        System.out.println("Your score is " + player);
+                label = new JLabel(value + " ");
+                label.setFont(new Font("sansserif", Font.BOLD, 32));
+                this.add(label);
 
-        System.out.println("Do you want to hit or stay?");
-        Scanner reader = new Scanner (System.in);
+                this.cards = new JLabel();
 
-        String yourChoice = reader.next();
+                add(this.cards);
 
-        if (yourChoice.equals("hit")) {
-            
-            
+                p = new Human("Test Player", deck.dealCard(), 20, true);
+                Card c = deck.dealCard();
+                c.setFaceDown(true);
+                dealer = new Dealer(c, 17);
+
+                p.getButtons().addListeners(this);
+
+                add(p.getPanel());
+                add(dealer.getPanel());
+
+                p.dealCard(deck, false);
+                dealer.dealCard(deck, false);
+
+                dealer.getPanel().changeScoreHidden(true);
+
+                if (p.getScore() >= 21) {
+                        playDealer();
+                }
         }
 
-    }
+        public void paint(Graphics g) {
+                super.paint(g);
+        }
 
-    public void hit() {
-        counter++;
-        drawn = deck[counter];
+        public void actionPerformed(ActionEvent e) {
+                JButton source = (JButton) e.getSource();
 
-        player = drawn.value + player;
-    }
+                if (source.getText().equals("Hit")) {
+                        p.dealCard(deck, false);
+                        validate();
+
+                        if (p.getScore() >= 21) {
+                                playDealer();
+                        }
+                        return;
+                } else if (source.getText().equals("Stay")) {
+                        playDealer();
+                        if (dealer.getScore() < p.getScore() && p.getScore() <= 21 || (dealer.getScore() > 21 && p.getScore() <= 21)) {
+                        winLoseLabel = new JLabel("You win! Congratulations :)");
+                        } else if ((dealer.getScore() == p.getScore()) || (dealer.getScore() > 21 && p.getScore() > 21)) {
+                                winLoseLabel = new JLabel("You draw with the dealer...");
+                        } else {
+                                winLoseLabel = new JLabel("Sorry, you bust! Better luck next time :(");
+                        }
+                        winLosePanel.add(winLoseLabel);
+                        this.add(winLosePanel);
+                        validate();
+                        repaint();
+                        
+                        return;
+                        
+                } else if (source.getText().equals("Reset")) {
+                        value = 0;
+                        reset();
+                        winLosePanel.remove(winLoseLabel);
+                        return;
+                } else if (source.getText().equals("New Hand")) {
+                        winLosePanel.remove(winLoseLabel);
+                        p.getButtons().setActive(true);
+                        p.getButtons().getButtonByName("New Hand").setEnabled(false);
+                        p.resetHand(deck.dealCard());
+                        dealer.resetHand(deck.dealCard());
+                        p.dealCard(deck, false);
+                        dealer.dealCard(deck, false);
+
+                        dealer.getPanel().changeScoreHidden(true);
+
+                        validate();
+
+                } else if (source.getText().equals("Bet")) {
+                        value = value + 10;
+                        label.setText(value + " ");
+                        repaint();
+                }
+        }
+
+        public void playDealer() {
+                p.getButtons().setActive(false);
+                dealer.automizeHand(this.deck);
+                p.getButtons().getButtonByName("New Hand").setEnabled(true);
+        }
+
+        public void reset() {
+                winLosePanel.remove(winLoseLabel);
+                value = 0;
+                p.getButtons().setActive(true);
+                deck = new Deck();
+                deck.shuffle();
+                p.setScore(0);
+                p.resetHand(deck.dealCard());
+                dealer.setScore(0);
+                dealer.resetHand(deck.dealCard());
+                dealer.setMaxScore(17);
+
+                p.dealCard(deck, false);
+                dealer.dealCard(deck, false);
+
+                dealer.getPanel().changeScoreHidden(true);
+
+                validate();
+        }
+
 }
-
-}
-
-
-
 
 
 
