@@ -1,49 +1,64 @@
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 
-import java.io.File;
-import java.io.IOException;
+public class ButtonPanel extends JPanel {
 
-import javax.imageio.ImageIO;
+        JButton hit;
+        JButton stay;
+        JButton newHand;
+        JButton reset;
+        JButton doubleDown;
+        JButton bet;
 
-public class Card {
-        
-        private String name;
-        private int value;
-        private Image image;
+        public ButtonPanel() {
+                this.hit = new JButton("Hit");
+                this.stay = new JButton("Stay");
+                this.newHand = new JButton("New Hand");
+                this.reset = new JButton("Reset");
+                this.doubleDown = new JButton("Double Down");
+                this.bet = new JButton("Bet");
 
+                this.newHand.setEnabled(false);
 
-        public Card(String name, int value) {
-            this.name = name;
-            this.value = value;
-            this.image = Deck.loadImage(name);
-        }
+                add(this.hit);
+                add(this.stay);
+                add(this.newHand);
+                add(this.reset);
+                add(this.doubleDown);
+                add(this.bet);
 
-        public String name() {
-            return this.name;
-        }
-        
-        public void draw(Graphics g, Rectangle r) {
-            g.drawImage(image, r.x, r.y, r.width, r.height, null);
-        }
-
-    private static Image loadImage(String name) {
-        String path = null;
-        Image image = null;
-
-        try { //where you put code that could fail
-            path = "images" + File.separator + name + ".jpg";
-            //images/JurassicPark.jpg
-            image = ImageIO.read(new File(path));
-
-        } catch(IOException e) {
-            System.out.println("Could not load image at path: " + path);
-            System.exit(1);
+                this.setMaximumSize(new Dimension(650, 100));
 
         }
 
-        return image;
-    }
-    
+        public void addListeners(Blackjack applet) {
+                this.hit.addActionListener(applet);
+                this.stay.addActionListener(applet);
+                this.newHand.addActionListener(applet);
+                this.reset.addActionListener(applet);
+                this.doubleDown.addActionListener(applet);
+                this.bet.addActionListener(applet);
+        }
+
+        public void setActive(boolean state) {
+                this.hit.setEnabled(state);
+                this.stay.setEnabled(state);
+        }
+
+        public JButton getButtonByName(String name) {
+                if (name.equalsIgnoreCase("hit")) {
+                        return this.hit;
+                } else if (name.equalsIgnoreCase("stay")) {
+                        return this.stay;
+                } else if (name.equalsIgnoreCase("new hand")) {
+                        return this.newHand;
+                } else if (name.equalsIgnoreCase("reset")) {
+                        return this.reset;
+                } else if (name.equalsIgnoreCase("bet")) {
+                        return this.bet;
+                } else if (name.equalsIgnoreCase("double down")) {
+                        return this.doubleDown;
+                }
+                return this.hit;
+        }
 }
