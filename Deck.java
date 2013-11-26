@@ -8,7 +8,7 @@ public class Deck {
         private int cardsDealt;
 
         public Deck() {
-                //Hearts = 0, Diamonds = 1, Clubs = 2, Spades = 3
+
                 this.cards = new Card[52];
                 this.cardsDealt = 0;
                 String suit = "Hearts";
@@ -64,7 +64,7 @@ public class Deck {
                 Card dealt = this.cards[this.cardsDealt];
                 cardsDealt++;
                 if (cardsDealt > 51) {
-                        //Last card was dealt
+                        
                         this.cardsDealt = 0;
                         this.shuffle();
                 }
