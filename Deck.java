@@ -44,10 +44,23 @@ public class Deck {
                 }
         }
 
-        public int getCardsDealt() {
+
+        public int dealingCards() {
                 return this.cardsDealt;
         }
 
+        //deals the cards once shuffled
+         public Card dealCards() {
+                Card dealt = this.cards[this.cardsDealt];
+                cardsDealt++;
+                if (cardsDealt > 51) {
+                        
+                        this.cardsDealt = 0;
+                        this.shuffle();
+                }
+                return dealt;
+        }
+        //shuffles cards
         public void shuffle() {
                 Random r = new Random();
                 int card = r.nextInt(52);
@@ -60,14 +73,5 @@ public class Deck {
                 }
         }
 
-        public Card dealCard() {
-                Card dealt = this.cards[this.cardsDealt];
-                cardsDealt++;
-                if (cardsDealt > 51) {
-                        
-                        this.cardsDealt = 0;
-                        this.shuffle();
-                }
-                return dealt;
-        }
+       
 }
