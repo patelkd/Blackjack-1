@@ -1,46 +1,50 @@
 import javax.swing.*;
-import java.awt.event.*;
-
 import java.awt.*;
 
-public class NumberPanel extends JPanel implements ActionListener, MouseListener {
-	private JLabel label;
-	private JButton add, subtract;
-	private int value = 0;
+public class NumberPanel extends JPanel {
 
-	public NumberPanel() {
-		super();
+        JButton hit;
+        JButton stay;
+        JButton newHand;
+        JButton reset;
+        JButton doubleDown;
+        JButton bet;
 
-		label = new JLabel(value+"");
-		label.setFont(new Font("sansserif", Font.BOLD, 32));
-		this.add(label);
+        //setting button labels and telling them the actions to perform
+        public NumberPanel() {
+                this.hit = new JButton("Hit");
+                this.stay = new JButton("Stay");
+                this.newHand = new JButton("New Hand");
+                this.reset = new JButton("Reset");
+                this.doubleDown = new JButton("Double Down");
+                this.bet = new JButton("Bet");
 
-		String title = "+1";
-		add = new JButton(title);
-		add.setActionCommand(title);
-		add.addActionListener(this);
-		this.add(add);
 
-		title = "-1";
-		subtract = new JButton(title);
-		subtract.setActionCommand(title);
-		subtract.addActionListener(this);
-		this.add(subtract);
+                add(this.hit);
+                add(this.stay);
+                add(this.newHand);
+                add(this.reset);
+                add(this.doubleDown);
+                add(this.bet);
 
-		this.addMouseListener(this);
+                this.setMaximumSize(new Dimension(650, 100));
+        }
 
-	}
+        //adds action listener to each button type; tells program what to
+        //do when each button is clicked graphically
+        public void addActionListeners(Blackjack applet) {
+                this.hit.addActionListener(applet);
+                this.stay.addActionListener(applet);
+                this.newHand.addActionListener(applet);
+                this.reset.addActionListener(applet);
+                this.doubleDown.addActionListener(applet);
+                this.bet.addActionListener(applet);
+        }
 
-	public actionPerformed() {
-		if ("+1".equals(ae.getActionCommand())) { //getActionCommand could be null
-			value++;
-			label.setText(value+"");
-			repaint();
-		} else if ("-1".equals(ae.getActionCommand())) {
-			value--;
-			label.setText(value+"");
-			repaint();
-		}
-		}
-	}
+        //makes the hit method work; returns hit
+        public JButton getButtonByName(String name) {
+       
+                return this.hit;
+
+        }
 }
