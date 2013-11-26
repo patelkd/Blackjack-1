@@ -17,7 +17,7 @@ public class Player {
                 return c;
         }
 
-        public void automizeHand(Deck d) {}
+        public void startHand(Deck d) {}
 
         public ButtonPanel getButtons() {
                 return this.panel.getButtons();
