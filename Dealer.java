@@ -4,13 +4,12 @@ public class Dealer extends Player {
                 super("Dealer", initialCard, maxScore, false);
         }
 
-        //@Override
         public void resetHand(Card card) {
                 card.setFaceDown(true);
                 super.resetHand(card);
         }
 
-        public void automizeHand(Deck d) {
+        public void startHand(Deck d) {
                 getPanel().changeScoreHidden(false);
 
                 getHand().setAllFaceUp();
