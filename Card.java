@@ -1,64 +1,89 @@
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
 
-public class ButtonPanel extends JPanel {
+public class Card extends JLabel {
 
-        JButton hit;
-        JButton stay;
-        JButton newHand;
-        JButton reset;
-        JButton doubleDown;
-        JButton bet;
+        private int faceNumber;
+        private int[] values;
+        private String suit;
+        private boolean faceDown;
 
-        public ButtonPanel() {
-                this.hit = new JButton("Hit");
-                this.stay = new JButton("Stay");
-                this.newHand = new JButton("New Hand");
-                this.reset = new JButton("Reset");
-                this.doubleDown = new JButton("Double Down");
-                this.bet = new JButton("Bet");
+        public Card(int faceNumber, String suit, int[] values) {
+                this.faceNumber = faceNumber;
+                this.values = values;
+                this.suit = suit;
+                this.faceDown = false;
 
-                this.newHand.setEnabled(false);
-
-                add(this.hit);
-                add(this.stay);
-                add(this.newHand);
-                add(this.reset);
-                add(this.doubleDown);
-                add(this.bet);
-
-                this.setMaximumSize(new Dimension(650, 100));
-
+                this.setIcon(new ImageIcon(this.loadImage(this.toString(), this.faceDown, 150, 200)));
         }
 
-        public void addListeners(Blackjack applet) {
-                this.hit.addActionListener(applet);
-                this.stay.addActionListener(applet);
-                this.newHand.addActionListener(applet);
-                this.reset.addActionListener(applet);
-                this.doubleDown.addActionListener(applet);
-                this.bet.addActionListener(applet);
+        public boolean isFacedown() {
+                return this.faceDown;
         }
 
-        public void setActive(boolean state) {
-                this.hit.setEnabled(state);
-                this.stay.setEnabled(state);
+        public void setFaceDown(boolean state) {
+                this.faceDown = state;
+                this.setIcon(new ImageIcon(this.loadImage(this.toString(), state, 150, 200)));
         }
 
-        public JButton getButtonByName(String name) {
-                if (name.equalsIgnoreCase("hit")) {
-                        return this.hit;
-                } else if (name.equalsIgnoreCase("stay")) {
-                        return this.stay;
-                } else if (name.equalsIgnoreCase("new hand")) {
-                        return this.newHand;
-                } else if (name.equalsIgnoreCase("reset")) {
-                        return this.reset;
-                } else if (name.equalsIgnoreCase("bet")) {
-                        return this.bet;
-                } else if (name.equalsIgnoreCase("double down")) {
-                        return this.doubleDown;
+        public int getFaceNumber() {
+                return this.faceNumber;
+        }
+
+        public int[] getValues() {
+                return this.values;
+        }
+
+        public String getSuit() {
+                return this.suit;
+        }
+
+        private static Image loadImage(String name, boolean faceDown, int width, int height) {
+                String path = null;
+                Image image = null;
+                Image scaled = null;
+
+                try {
+                        if (faceDown) {
+                                path = "cards" + File.separator + "back-blue.png"; 
+                        } else {
+                                path = "cards" + File.separator + name + ".png";
+                        }
+                        image = ImageIO.read(new File(path));
+                        scaled = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                } catch (IOException e) {
+                        System.out.println("Could not load card at path: " + path);
+                        e.printStackTrace();
                 }
-                return this.hit;
+
+                return scaled;
         }
+
+        public String getCardFace() {
+                switch(this.faceNumber) {
+                        case 1:
+                                return "A";
+                        case 11:
+                                return "J";
+                        case 12:
+                                return "Q";
+                        case 13:
+                                return "K";
+                        default:
+                                return ("" + this.faceNumber);
+                }
+        }
+
+        public String toString() {
+                return this.getCardFace() + this.getSuit(); 
+        }
+
 }
