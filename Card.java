@@ -11,48 +11,55 @@ import java.awt.Dimension;
 
 public class Card extends JLabel {
 
-        private int faceNumber;
+        private boolean cardDown;
         private int[] values;
+        private int cardNumber;
         private String suit;
-        private boolean faceDown;
+        
 
-        public Card(int faceNumber, String suit, int[] values) {
-                this.faceNumber = faceNumber;
+        public Card(int cardNumber, String suit, int[] values) {
+                this.cardNumber = cardNumber;
                 this.values = values;
                 this.suit = suit;
-                this.faceDown = false;
+                this.cardDown = false;
 
-                this.setIcon(new ImageIcon(this.loadImage(this.toString(), this.faceDown, 150, 200)));
+                this.setIcon(new ImageIcon(this.loadImage(this.convertString(), this.cardDown, 150, 200)));
         }
 
-        public boolean isFacedown() {
-                return this.faceDown;
+
+//check if the card is face down
+        public boolean isCarddown() {
+                return this.cardDown;
         }
 
-        public void setFaceDown(boolean state) {
-                this.faceDown = state;
-                this.setIcon(new ImageIcon(this.loadImage(this.toString(), state, 150, 200)));
+        //these are the setters
+
+        public void setCardDown(boolean state) {
+                this.cardDown = state;
+                this.setIcon(new ImageIcon(this.loadImage(this.convertString(), state, 150, 200)));
         }
 
-        public int getFaceNumber() {
-                return this.faceNumber;
+        //these are the getters
+        public String getSuit() {
+                return this.suit;
+        }
+
+        public int Number() {
+                return this.cardNumber;
         }
 
         public int[] getValues() {
                 return this.values;
         }
 
-        public String getSuit() {
-                return this.suit;
-        }
-
-        private static Image loadImage(String name, boolean faceDown, int width, int height) {
+     
+        private static Image loadImage(String name, boolean cardDown, int width, int height) {
                 String path = null;
                 Image image = null;
                 Image scaled = null;
 
                 try {
-                        if (faceDown) {
+                        if (cardDown) {
                                 path = "cards" + File.separator + "back-blue.png"; 
                         } else {
                                 path = "cards" + File.separator + name + ".png";
@@ -67,8 +74,9 @@ public class Card extends JLabel {
                 return scaled;
         }
 
+        //calls card type
         public String getCardFace() {
-                switch(this.faceNumber) {
+                switch(this.cardNumber) {
                         case 1:
                                 return "A";
                         case 11:
@@ -78,11 +86,12 @@ public class Card extends JLabel {
                         case 13:
                                 return "K";
                         default:
-                                return ("" + this.faceNumber);
+                                return ("" + this.cardNumber);
                 }
         }
 
-        public String toString() {
+        //Converts card type to a string to be drawn from card folder
+        public String convertString() {
                 return this.getCardFace() + this.getSuit(); 
         }
 
