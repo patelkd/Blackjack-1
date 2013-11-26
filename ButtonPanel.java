@@ -28,10 +28,6 @@ public class ButtonPanel extends JPanel {
                 add(this.bet);
 
                 this.setMaximumSize(new Dimension(650, 100));
-
-
-
-                //this.setBorder(BorderFactory.createLineBorder(Color.RED));
         }
 
         public void addListeners(Blackjack applet) {
