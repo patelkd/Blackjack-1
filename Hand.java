@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -18,15 +17,16 @@ public class Hand extends JPanel {
                 add(card);
         }
 
+        //faces cards up
         public void setAllFaceUp() {
                 for (int i = 0 ; i < amountOfCards ; i++) {
-                        this.cards[i].setFaceDown(false);
+                        this.cards[i].setCardDown(false);
                 }
         }
-
-        public int addCard(Card c, boolean faceDown, int maxScore) {
+        //adds an additional card
+        public int addCard(Card c, boolean cardDown, int maxScore) {
                 if (amountOfCards < 11) {
-                        c.setFaceDown(faceDown);
+                        c.setCardDown(cardDown);
                         cards[amountOfCards] = c;
                         amountOfCards++;
 
@@ -36,12 +36,13 @@ public class Hand extends JPanel {
                 return calculateScore(c, maxScore);
         }
 
+        //adds score value
         public int calculateScore(Card newCard, int maxScore) {
 
                 int newScore = 0;
                 List<Card> aces = new ArrayList<Card>(4);
 
-                for (int i = 0 ; i < getNumberOfCards() ; i++) {
+                for (int i = 0 ; i < countCards() ; i++) {
                         if (getCards()[i].getValues().length == 2) {
                                 aces.add(getCards()[i]);
                         } else {
@@ -65,7 +66,7 @@ public class Hand extends JPanel {
                 return this.cards;
         }
 
-        public int getNumberOfCards() {
+        public int countCards() {
                 return this.amountOfCards;
         }
 
