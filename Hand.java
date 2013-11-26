@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -23,7 +24,6 @@ public class Hand extends JPanel {
                 }
         }
 
-        //Adds card to hand
         public int addCard(Card c, boolean faceDown, int maxScore) {
                 if (amountOfCards < 11) {
                         c.setFaceDown(faceDown);
@@ -49,7 +49,6 @@ public class Hand extends JPanel {
                         }
                 }
 
-                //Now calculate each ace value so that ace value is 11 until it makes it > 21
                 for (Card ace : aces) {
                         if (newScore + ace.getValues()[1] <= 21 && newScore + ace.getValues()[1] != maxScore) {
                                 newScore += ace.getValues()[1];
@@ -70,7 +69,6 @@ public class Hand extends JPanel {
                 return this.amountOfCards;
         }
 
-        //@Override
         public String toString() {
                 String output = "";
                 for (Card c : this.cards) {
