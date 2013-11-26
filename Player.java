@@ -10,7 +10,7 @@ public class Player {
         }
 
         public Card dealCard(Deck deck, boolean faceDown) {
-                Card c = deck.dealCard();
+                Card c = deck.dealCards();
                 this.setScore(this.panel.getHand().addCard(c, faceDown, this.maxScore));
                 this.panel.validate();
                 
@@ -19,7 +19,7 @@ public class Player {
 
         public void startHand(Deck d) {}
 
-        public ButtonPanel getButtons() {
+        public NumberPanel getButtons() {
                 return this.panel.getButtons();
         }
 
