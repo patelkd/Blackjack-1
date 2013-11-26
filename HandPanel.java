@@ -8,7 +8,7 @@ public class HandPanel extends JPanel {
         private int score;
         private boolean isScoreHidden;
         private JLabel scoreLabel;
-        private ButtonPanel buttonPanel;
+        private NumberPanel numberPanel;
         private String scorePrefix;
 
         public HandPanel(Player p, Card initialCard, boolean hasButtons) {
@@ -19,13 +19,13 @@ public class HandPanel extends JPanel {
                 this.scoreLabel = new JLabel(scorePrefix + this.score);
                 
                 if (hasButtons) {
-                        this.buttonPanel = new ButtonPanel();
+                        this.numberPanel = new NumberPanel();
                 }
 
                 setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
                 add(scoreLabel);
                 if (hasButtons) {
-                        add(buttonPanel);
+                        add(numberPanel);
                 }
                 add(hand);
 
@@ -33,11 +33,11 @@ public class HandPanel extends JPanel {
                 validate();
         }
 
-        public ButtonPanel getButtons() {
-                return this.buttonPanel;
+        public NumberPanel getButtons() {
+                return this.numberPanel;
         }
-
-        public void changeScoreHidden(boolean state) {
+        //hides dealer's score
+        public void hideScore(boolean state) {
                 if (state) {
                         this.scoreLabel.setText(this.scorePrefix + " ");
                 
