@@ -62,18 +62,23 @@ public class Blackjack extends Applet implements ActionListener {
                         p.dealCard(deck, false);
                         validate();
 
-                        if (p.getScore() >= 21) {
+                        if (p.getScore() > 21) {
+                        winLoseLabel = new JLabel("You bust! Better luck next time! You lost " + value + " dollars.");
+                        winLosePanel.add(winLoseLabel);
+                        this.add(winLosePanel);
+                        validate();
+                        repaint();
                                 playDealer();
                         }
                         return;
                 } else if (source.getText().equals("Stay")) {
                         playDealer();
                         if (dealer.getScore() < p.getScore() && p.getScore() <= 21 || (dealer.getScore() > 21 && p.getScore() <= 21)) {
-                        winLoseLabel = new JLabel("You win! Congratulations :)");
+                        winLoseLabel = new JLabel("You win! Congratulations :-) You won " + value + " dollars");
                         } else if ((dealer.getScore() == p.getScore()) || (dealer.getScore() > 21 && p.getScore() > 21)) {
                                 winLoseLabel = new JLabel("You draw with the dealer...");
                         } else {
-                                winLoseLabel = new JLabel("Sorry, you bust! Better luck next time :(");
+                                winLoseLabel = new JLabel("Sorry, you bust! Better luck next time :-( You lost " + value + " dollars.");
                         }
                         winLosePanel.add(winLoseLabel);
                         this.add(winLosePanel);
@@ -85,10 +90,13 @@ public class Blackjack extends Applet implements ActionListener {
                 } else if (source.getText().equals("Reset")) {
                         value = 0;
                         reset();
+                        value = 0;
                         winLosePanel.remove(winLoseLabel);
+                        value = 0;
                         return;
                 } else if (source.getText().equals("New Hand")) {
                         winLosePanel.remove(winLoseLabel);
+                        value = 0;
                         p.getButtons().setActive(true);
                         p.getButtons().getButtonByName("New Hand").setEnabled(false);
                         p.resetHand(deck.dealCard());
@@ -102,18 +110,23 @@ public class Blackjack extends Applet implements ActionListener {
 
                 } else if (source.getText().equals("Bet")) {
                         value = value + 10;
-                        label.setText(value + " ");
+                        label.setText("You bet: $" + value + " ");
                         repaint();
+                } else if (source.getText().equals("Double Down")) {
+                        value = value *2;
+                        label.setText("You bet: $" + value + " ");
                 }
         }
 
         public void playDealer() {
                 p.getButtons().setActive(false);
-                dealer.automizeHand(this.deck);
+                dealer.startHand(this.deck);
+
                 p.getButtons().getButtonByName("New Hand").setEnabled(true);
         }
 
         public void reset() {
+                label.setText("You bet: $" + 0);
                 winLosePanel.remove(winLoseLabel);
                 value = 0;
                 p.getButtons().setActive(true);
@@ -127,13 +140,10 @@ public class Blackjack extends Applet implements ActionListener {
 
                 p.dealCard(deck, false);
                 dealer.dealCard(deck, false);
-
+                value =0;
                 dealer.getPanel().changeScoreHidden(true);
-
+                value =0;
                 validate();
         }
 
 }
-
-
-
