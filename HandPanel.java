@@ -29,7 +29,6 @@ public class HandPanel extends JPanel {
                 }
                 add(hand);
 
-                //this.setBorder(BorderFactory.createLineBorder(Color.CYAN));
 
                 validate();
         }
